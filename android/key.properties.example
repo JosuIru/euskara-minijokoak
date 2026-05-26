@@ -1,0 +1,20 @@
+# Plantilla de credenciales de firma de release para Android.
+#
+# Copia este archivo a `android/key.properties` (sin la extensión .example) y
+# rellena los valores reales. El archivo key.properties y el keystore (.jks)
+# están ignorados por git (ver android/.gitignore): NUNCA los subas al repo ni
+# los compartas. Si pierdes el keystore o su contraseña no podrás publicar
+# actualizaciones de la app en Play Store.
+#
+# Genera el keystore con (ajusta la ruta y el alias a tu gusto):
+#
+#   keytool -genkey -v -keystore ~/euskaraz-release.jks \
+#       -keyalg RSA -keysize 2048 -validity 10000 -alias euskaraz
+#
+# Guarda el .jks fuera del repositorio y anota las contraseñas en un gestor
+# seguro. Luego apunta storeFile a esa ruta absoluta.
+
+storePassword=CAMBIA_ESTO
+keyPassword=CAMBIA_ESTO
+keyAlias=euskaraz
+storeFile=/ruta/absoluta/a/euskaraz-release.jks
