@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../oinarriak/eguneraketa_banderatxoa.dart';
 import '../oinarriak/paleta.dart';
@@ -9,6 +10,10 @@ import '../oinarriak/pintor_rotulador.dart';
 class HasieraOrria extends StatelessWidget {
   const HasieraOrria({super.key});
 
+  /// Dirección pública de la app que se comparte con el botón de la esquina.
+  static const String urlAplikazioa =
+      'https://github.com/JosuIru/euskara-minijokoak/releases/latest';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,44 +21,71 @@ class HasieraOrria extends StatelessWidget {
       body: SafeArea(
         child: FondoPapelEnvejecido(
           semilla: 3,
-          child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              final bool esLayoutAncho = constraints.maxWidth > 720;
-              return Padding(
-                padding: const EdgeInsets.all(32),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    const _CabeceraTitulo(),
-                    const SizedBox(height: 8),
-                    const EguneraketaBanderatxoa(),
-                    Expanded(
-                      child: Center(
-                        child: esLayoutAncho
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
-                                  Expanded(child: _TarjetaPuertaAlumno()),
-                                  SizedBox(width: 24),
-                                  Expanded(child: _TarjetaPuertaProfesor()),
-                                ],
-                              )
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
-                                  _TarjetaPuertaAlumno(),
-                                  SizedBox(height: 24),
-                                  _TarjetaPuertaProfesor(),
-                                ],
-                              ),
-                      ),
+          child: Stack(
+            children: <Widget>[
+              LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  final bool esLayoutAncho = constraints.maxWidth > 720;
+                  return Padding(
+                    padding: const EdgeInsets.all(32),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        const _CabeceraTitulo(),
+                        const SizedBox(height: 8),
+                        const EguneraketaBanderatxoa(),
+                        Expanded(
+                          child: Center(
+                            child: esLayoutAncho
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const <Widget>[
+                                      Expanded(child: _TarjetaPuertaAlumno()),
+                                      SizedBox(width: 24),
+                                      Expanded(child: _TarjetaPuertaProfesor()),
+                                    ],
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const <Widget>[
+                                      _TarjetaPuertaAlumno(),
+                                      SizedBox(height: 24),
+                                      _TarjetaPuertaProfesor(),
+                                    ],
+                                  ),
+                          ),
+                        ),
+                        const _PieDePagina(),
+                      ],
                     ),
-                    const _PieDePagina(),
-                  ],
-                ),
-              );
-            },
+                  );
+                },
+              ),
+              const Positioned(top: 8, right: 8, child: _BotonPartekatu()),
+            ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Icono de la esquina superior que abre el menú de compartir del sistema
+/// (Android) o la Web Share API (navegador) con el enlace a la app.
+class _BotonPartekatu extends StatelessWidget {
+  const _BotonPartekatu();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      tooltip: 'Partekatu aplikazioa',
+      icon: const Icon(Icons.share_outlined, color: PaletaAek.tintaNegra),
+      onPressed: () => SharePlus.instance.share(
+        ShareParams(
+          text:
+              'Euskara ikasteko AEKren aplikazioa: kantutegia eta '
+              'gramatika jolasak. ${HasieraOrria.urlAplikazioa}',
+          subject: 'Euskaraz — AEK',
         ),
       ),
     );

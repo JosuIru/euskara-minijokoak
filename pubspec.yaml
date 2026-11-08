@@ -55,6 +55,7 @@ dependencies:
   # Lee la versión y el número de build del propio paquete en tiempo de
   # ejecución, para comparar con el manifiesto remoto de actualizaciones.
   package_info_plus: ^8.0.2
+  share_plus: ^12.0.2
 
 dev_dependencies:
   flutter_test:
