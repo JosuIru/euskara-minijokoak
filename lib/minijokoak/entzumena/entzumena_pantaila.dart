@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 import '../../oinarriak/ariketa.dart';
+import '../../oinarriak/euskarazko_ahotsa_abisua.dart';
 import '../../oinarriak/paleta.dart';
 import '../../oinarriak/pintor_rotulador.dart';
 import '../../oinarriak/selector_maila_orria.dart';
@@ -200,6 +201,7 @@ class _EntzumenaPantailaState extends State<EntzumenaPantaila> {
                               color: PaletaAek.tintaDiluida(0.55),
                             ),
                           ),
+                          EuskarazkoAhotsaAbisua(tts: _tts),
                           const SizedBox(height: 24),
                           _GrupoOpciones(
                             opciones: _opcionesRondaActual,
